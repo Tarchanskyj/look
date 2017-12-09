@@ -22,6 +22,9 @@ class Comment(models.Model):
     def __str__(self):
         return self.author + ' - ' + self.product.name
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 
 
