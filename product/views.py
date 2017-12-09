@@ -43,6 +43,7 @@ class ProductDetailView(SingleObjectMixin, FormView):
             Comment.objects.create(author=author, text=text, product=self.get_object())
             messages.success(self.request, 'Comment was added successfully!')
         else:
+            messages.warning(request, 'Please correct the error below.')
             return self.form_invalid(form)
         return super(ProductDetailView, self).post(request, *args, **kwargs)
 

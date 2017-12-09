@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import reverse
 
-from product.models import Product, Comment
+from product.models import Product, Comment, Like
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Comment)
+admin.site.register(Like)
