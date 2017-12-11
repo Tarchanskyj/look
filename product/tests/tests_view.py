@@ -19,7 +19,3 @@ class UrlsTest(TestCase):
         resp = self.client.get(reverse('login'))
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_url_exists_product(self):
-        Product.objects.create(name='test name', slug='test-name', description='adminadmin', price='23')
-        resp = self.client.get(reverse('product:product_detail', kwargs={'slug': 'test-name'}))
-        self.assertEqual(resp.status_code, 200)

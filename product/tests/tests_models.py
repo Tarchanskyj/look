@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from product.models import Product, Comment, Like
 
 
@@ -13,7 +14,8 @@ class ModelsTest(TestCase):
         Comment.objects.create(product=product, author='test', text='adminadmin')
         self.assertEqual(Comment.objects.all().count(), 1)
 
-    def test_model_like_without_user(self):
+    def test_model_like(self):
         product = Product.objects.create(name='test name', slug='test-name', description='adminadmin', price='23')
-        Like.objects.create(product=product)
+        user = User.objects.create_user('admin', 'admin@gmail.com', 'adminadmin')
+        Like.objects.create(product=product, user=user)
         self.assertEqual(Like.objects.all().count(), 1)
