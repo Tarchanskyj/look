@@ -1,6 +1,9 @@
 *.pyc
 *.pyo
+*.djcache
 *~
 .idea/
 __pycache__
 venv/
+htmlcov/
+.coverage

@@ -3,11 +3,13 @@ from django.contrib import messages
 from django.views.generic import ListView, DetailView, FormView, TemplateView, View, UpdateView
 from django.views.generic.detail import SingleObjectMixin
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.cache import cache
 
 from product.models import Product, Comment, Like
 from product.forms import CommentModelForm, LikeModelForm
 
 import datetime
+import operator
 
 
 class MainPage(TemplateView):
@@ -19,12 +21,25 @@ class ProductListView(ListView):
     login_url = 'login'
     model = Product
     template_name = 'product/products.html'
-    paginate_by = 3
+    paginate_by = 6
     ordering = 'created_at'
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = cache.get('queryset')
+        if queryset is None:
+            queryset = Product.objects.all()
+            cache.set('queryset', queryset, 60 * 30)
+        ordering = self.get_ordering()
+        if ordering:
+            if ordering == 'likes_counter':
+                queryset = sorted(queryset, key=operator.attrgetter(ordering), reverse=True)
+            else:
+                queryset = sorted(queryset, key=operator.attrgetter(ordering))
+        return queryset
 
     def get_ordering(self):
         if self.request.GET.get('order') == 'likes':
-            self.ordering = '-likes_counter'
+            self.ordering = 'likes_counter'
         elif self.request.GET.get('order') == 'name':
             self.ordering = 'name'
         return self.ordering
@@ -83,6 +98,7 @@ class ProductDetailView(SingleObjectMixin, FormView):
 
     def get_success_url(self):
         return reverse('product:product_detail', kwargs={'slug': self.kwargs['slug']})
+
 
 
 #

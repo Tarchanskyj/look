@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.cache import cache
 
 
 class Product(models.Model):
@@ -37,6 +40,9 @@ class Like(models.Model):
         return self.user.username + ' - ' + self.product.name
 
 
-
+@receiver(post_save, sender=Product)
+def update_queryset(sender, instance, **kwargs):
+    queryset = Product.objects.all()
+    cache.set('queryset', queryset, 60 * 30)
 
 # Create your models here.

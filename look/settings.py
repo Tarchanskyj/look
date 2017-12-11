@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'coverage',
     'product',
 ]
 
@@ -67,6 +68,13 @@ TEMPLATES = [
         },
     },
 ]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': (os.path.join(BASE_DIR, 'storage/cache/'))
+    }
+}
 
 WSGI_APPLICATION = 'look.wsgi.application'
 
