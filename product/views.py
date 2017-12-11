@@ -13,11 +13,13 @@ import operator
 
 
 class MainPage(TemplateView):
+    '''Main page'''
     authentication_form = AuthenticationForm
     template_name = 'index.html'
 
 
 class ProductListView(ListView):
+    '''Products page. Queryset for it takes from cache. Cache updates on signal post_save for model Product'''
     login_url = 'login'
     model = Product
     template_name = 'product/products.html'
@@ -46,6 +48,7 @@ class ProductListView(ListView):
 
 
 class ProductDetailView(SingleObjectMixin, FormView):
+    '''Product page with two forms for Like and Comment'''
     form_class = CommentModelForm
     context_object_name = 'product'
     model = Product
@@ -66,7 +69,7 @@ class ProductDetailView(SingleObjectMixin, FormView):
         return super(ProductDetailView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        '''Add new Comment'''
+        '''Add new Comment or Like. It check form name from page.'''
         self.object = self.get_object()
         if self.request.POST.get('form_name') == 'comment':
             form_comment = CommentModelForm(self.request.POST, prefix='comment')
@@ -98,7 +101,3 @@ class ProductDetailView(SingleObjectMixin, FormView):
 
     def get_success_url(self):
         return reverse('product:product_detail', kwargs={'slug': self.kwargs['slug']})
-
-
-
-#
