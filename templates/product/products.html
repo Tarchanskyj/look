@@ -7,25 +7,21 @@
 {% block title %}Products{% endblock title %}
 
 
-
 {% block content %}
-  <div class="container">
 
+  <div class="container">
 
   {% include 'include/navbar.html' with active_tab='products' %}
 
    <div class="col-lg-3">
-          <h1 class="my-4">Shop Name</h1>
-            <a href="?order=likes" class="btn btn-primary">Sort by likes</a>
-            <a href="?order=name" class="btn btn-primary">Sort by name</a>
-
-        </div>
+     <h1 class="my-4">Shop Name</h1>
+       <a href="?order=likes" class="btn btn-primary">Sort by likes</a>
+       <a href="?order=name" class="btn btn-primary">Sort by name</a>
+   </div>
 
 
    <div class="col-lg-9" style="padding-top: 25px;">
-
           <div class="row">
-
             {% for product in object_list %}
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card h-100">
@@ -43,10 +39,8 @@
               </div>
             </div>
             {% endfor %}
-
           </div>
           <!-- /.row -->
-
         </div>
 <!-- /.col-lg-9 -->
 
@@ -83,9 +77,8 @@
       </ul>
     </nav>
 
-
 {% endif %}
-  </div>
 
+  </div>
 
 {% endblock content %}
