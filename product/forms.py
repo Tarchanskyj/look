@@ -1,5 +1,5 @@
 from django.forms import ModelForm, Textarea
-from product.models import Comment
+from product.models import Comment, Like
 
 
 class CommentModelForm(ModelForm):
@@ -10,3 +10,10 @@ class CommentModelForm(ModelForm):
         widgets = {
             'text': Textarea(attrs={'rows': 3}),
         }
+
+
+class LikeModelForm(ModelForm):
+
+    class Meta:
+        model = Like
+        fields = ['user', 'product']

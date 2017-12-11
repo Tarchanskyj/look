@@ -33,13 +33,17 @@
         <div class="col-lg-9">
 
           <div class="card mt-4">
-            <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
             <div class="card-body">
               <h3 class="card-title">{{ product.name }}</h3>
               <h4>${{ product.price }}</h4>
               <p class="card-text">{{ product.description }}</p>
-              <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-              4.0 stars
+                <form method="post">
+                  {% csrf_token %}
+              <input name="like-product" hidden value="{{ product.id }}">
+              <input name="like-user" hidden value="{{ user.id }}">
+              <button type="submit" name="form_name" value="like" class="btn btn-primary">Like!</button>
+                </form>
+                    {{ product.likes_counter }} people like this product!
             </div>
           </div>
           <!-- /.card -->
@@ -57,7 +61,7 @@
             <form method="post">
             {{ form.as_p }}
                 {% csrf_token %}
-              <input type="submit" class="btn btn-success" value="Leave a Review">
+                <button type="submit" name="form_name" value="comment" class="btn btn-success" >Leave e Review!</button>
             </form>
             </div>
           </div>

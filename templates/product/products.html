@@ -14,6 +14,13 @@
 
   {% include 'include/navbar.html' with active_tab='products' %}
 
+   <div class="col-lg-3">
+          <h1 class="my-4">Shop Name</h1>
+            <a href="?order=likes" class="btn btn-primary">Sort by likes</a>
+            <a href="?order=name" class="btn btn-primary">Sort by name</a>
+
+        </div>
+
 
    <div class="col-lg-9" style="padding-top: 25px;">
 
@@ -31,7 +38,7 @@
                   <p class="card-text">{{ product.description }}</p>
                 </div>
                 <div class="card-footer">
-                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                  {{ product.likes_counter }} people like this product!
                 </div>
               </div>
             </div>
